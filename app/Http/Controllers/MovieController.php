@@ -20,13 +20,13 @@ class MovieController extends Controller
     public function adminindex()
     {
         $movies = Movie::all();
-        return view('admin.movie', ['movieParam' => $movies]);
+        return view('adminmovie', ['movieParam' => $movies]);
     }
 
     // 映画登録画面
     public function createmovie()
     {
-        return view('admin.createmovie');
+        return view('createmovie');
     }
 
     // 登録処理
@@ -50,7 +50,7 @@ class MovieController extends Controller
     public function editmovie($id)
     {
         $movie=Movie::find($id);
-        return view('admin.editmovie', compact('movie'));
+        return view('editmovie', compact('movie'));
     }
 
     // 更新処理
@@ -75,5 +75,17 @@ class MovieController extends Controller
         }
         \Session::flash('err_msg','更新しました');
         return redirect()->route('admin.index');
+    }
+
+    // 削除
+    public function destroymovie($id)
+    {
+        $movie=Movie::find($id);
+        if($movie) {
+            $movie->delete();
+            return redirect()->route('admin.index');
+        } else {
+            return abort(404);
+        }
     }
 }

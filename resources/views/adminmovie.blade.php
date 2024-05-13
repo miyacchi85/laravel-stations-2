@@ -19,6 +19,7 @@
                 <th>登録日時</th>
                 <th>更新日時</th>
                 <th>編集</th>
+                <th>削除</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,13 @@
                 <td>{{ $movie->created_at }}</td>
                 <td>{{ $movie->updated_at }}</td>
                 <td><a href="{{route('edit', $movie)}}">編集</a></td>
+                <td>
+                    <form action="{{route('destroy', $movie)}}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit">{{ __('削除') }}</button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>

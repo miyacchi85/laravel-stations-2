@@ -16,3 +16,5 @@ Route::post('/admin/movies/store', [MovieController::class, 'store'])->name('sto
 Route::get('/admin/movies/{id}/edit/', [MovieController::class, 'editmovie'])->name('edit');
 // 更新処理
 Route::patch('/admin/movies/{id}/update/', [MovieController::class, 'updatemovie'])->name('update');
+// 更新処理
+Route::delete('/admin/movies/{id}/destroy/', [MovieController::class, 'destroymovie'])->name('destroy');
