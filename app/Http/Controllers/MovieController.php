@@ -10,10 +10,21 @@ use App\Http\Requests\UpdateMovieRequest;
 class MovieController extends Controller
 {
     // 一覧画面表示
-    public function index()
-    {
-        $movies = Movie::all();
-        return view('movie', ['movieParam' => $movies]);
+    public function index(Request $request)
+    {    
+        $keyword = $request->input('keyword');
+        $is_showing = $request->input('is_showing');
+
+        $movies = Movie::query()
+            ->when(isset($keyword), function($query) use ($keyword) {
+                return $query->where(function($query) use ($keyword) {
+                    $query->where('description', 'like', "%{$keyword}%")->orWhere('title', 'like', "%{$keyword}%");
+                });
+            })->when(isset($is_showing), function($query) use ($is_showing) {
+                return $query->where('is_showing', $is_showing);
+            })->paginate(20);
+        
+        return view('movie', ['movies' => $movies]);
     }
 
     // 一覧画面表示（管理画面）

@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>管理者画面</h1>    
-    <table>
+    <table border="1">
         <thead>
             <tr>
                 <th>映画タイトル</th>
