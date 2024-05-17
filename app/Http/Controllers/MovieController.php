@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
+use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
@@ -42,20 +44,36 @@ class MovieController extends Controller
 
     // 登録処理
     public function store(CreateMovieRequest $request)
-    {
-        $inputs = $request->all();
+    { 
+        try {
+            DB::beginTransaction();
+            $inputs = $request->validated();
+            $genre_check = Genre::where('name', $inputs['genre'])->first();
 
-        \DB::beginTransaction();
-        try{
-            Movie::create($inputs);
-            \DB::commit();
-        }catch(\Throwable $e){
-            \DB::rollback();
+            $movie=new Movie;
+            $movie->title=$inputs['title'];
+            $movie->image_url=$inputs['image_url'];
+            $movie->published_year=$inputs['published_year'];
+            $movie->is_showing=$inputs['is_showing'];
+            $movie->description=$inputs['description'];
+
+            if (!$genre_check) {
+            $genre=new Genre;
+            $genre->name=$inputs['genre'];
+            $genre->save();
+            $movie->genre_id=$genre->id;        
+            } else {
+            $movie->genre_id=$genre_check->id;
+            }
+            
+            $movie->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
             abort(500);
         }
-        \Session::flash('err_msg','登録しました');
         return redirect()->route('admin.index');
-    }
+      }
 
     // 編集画面表示
     public function editmovie($id)
@@ -67,24 +85,33 @@ class MovieController extends Controller
     // 更新処理
     public function updatemovie(UpdateMovieRequest $request,$id)
     {
-        \DB::beginTransaction();
-        try{
+        try {
+            DB::beginTransaction();
             $inputs = $request->validated();
+            $genre_check = Genre::where('name', $inputs['genre'])->first();
+
             $movie=Movie::find($id);
-            $movie->fill([
-                'title'=>$inputs['title'],
-                'image_url'=>$inputs['image_url'],
-                'published_year'=>$inputs['published_year'],
-                'is_showing'=>$inputs['is_showing'],
-                'description'=>$inputs['description']
-            ]);
+            $movie->title=$inputs['title'];
+            $movie->image_url=$inputs['image_url'];
+            $movie->published_year=$inputs['published_year'];
+            $movie->is_showing=$inputs['is_showing'];
+            $movie->description=$inputs['description'];
+
+            if (!$genre_check) {
+            $genre=new Genre;
+            $genre->name=$inputs['genre'];
+            $genre->save();
+            $movie->genre_id=$genre->id;        
+            } else {
+            $movie->genre_id=$genre_check->id;
+            }
+            
             $movie->save();
-            \DB::commit();
-        }catch(\Throwable $e){
-            \DB::rollback();
+            DB::commit();
+        }catch (\Throwable $e) {
+            DB::rollBack();
             abort(500);
         }
-        \Session::flash('err_msg','更新しました');
         return redirect()->route('admin.index');
     }
 

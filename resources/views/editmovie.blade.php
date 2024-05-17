@@ -36,6 +36,11 @@
         </div>
 
         <div>
+            <label for="genre">ジャンル:</label>
+            <input type="text" name="genre" id="genre" value="{{ $movie->genre->name }}">
+        </div>
+
+        <div>
             <label for="is_showing">公開中である:</label>
             <input type="hidden" name="is_showing" id="is_showing" value="0">
             <input type="checkbox" name="is_showing" id="is_showing" value="1" {{ $movie->is_showing ? 'checked' : '' }}>
