@@ -25,7 +25,7 @@
         <tbody>
             @foreach ($movieParam as $movie)
             <tr>
-                <td>{{ $movie->title }} </td>
+                <td><a href="movies/{{ $movie->id }}">{{ $movie->title }}</a></td>
                 <td>{{ $movie->image_url }}</td>
                 <td>{{ $movie->published_year }}</td>
                 <td>{{ $movie->is_showing ? '上映中' : '上映予定' }}</td>

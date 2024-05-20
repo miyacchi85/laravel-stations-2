@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Genre;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
@@ -29,11 +30,32 @@ class MovieController extends Controller
         return view('movie', ['movies' => $movies]);
     }
 
+    public function detail($id)
+    {    
+        $movies=Movie::find($id);
+        $schedules = Schedule::query()
+        ->where('movie_id', $id)
+        ->orderBy('start_time','asc')
+        ->get();
+        return view('detail', ['movies' => $movies, 'schedules' => $schedules]);
+    }
+
     // 一覧画面表示（管理画面）
     public function adminindex()
     {
         $movies = Movie::all();
         return view('adminmovie', ['movieParam' => $movies]);
+    }
+
+    // 詳細表示（管理者画面）
+    public function adminDetail($id)
+    {    
+        $movies=Movie::find($id);
+        $schedules = Schedule::query()
+        ->where('movie_id', $id)
+        ->orderBy('start_time','asc')
+        ->get();
+        return view('adminDetail', ['movies' => $movies, 'schedules' => $schedules]);
     }
 
     // 映画登録画面

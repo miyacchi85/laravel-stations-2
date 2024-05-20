@@ -42,7 +42,7 @@
     </tr>
     @foreach ($movies as $movie)
       <tr>
-        <td>{{ $movie->title }}</td>
+        <td><a href="movies/{{ $movie->id }}">{{ $movie->title }}</a></td>
         <td><img style="max-width: 150px;" src="{{ $movie->image_url }}" alt=""></td>
         <td>{{ $movie->published_year }}</td>
         <td>
