@@ -18,9 +18,8 @@ class Movie extends Model
         'genre_id',
     ];
 
-    public function genre()
-    {
-        return $this->belongsTo(Genre::class);
+    public function genre() {
+        return $this->belongsTo('App\Models\Genre');
     }
 
     public function schedules() {

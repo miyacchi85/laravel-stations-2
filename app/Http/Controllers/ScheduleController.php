@@ -45,7 +45,7 @@ class ScheduleController extends Controller
       DB::beginTransaction();
       $inputs = $request->validated();
       $movie_id = $inputs['movie_id'];
-      $screen_id = $inputs['screen_id'];
+      // $screen_id = $inputs['screen_id'];
       $start_time_date = $inputs['start_time_date'];
       $start_time_time = $inputs['start_time_time'];
       $start_time_check = new Carbon("$start_time_time");
@@ -56,7 +56,7 @@ class ScheduleController extends Controller
       $end_time = new Carbon("$end_time_date $end_time_time");
 
       $check = Schedule::query()
-             -> where('screen_id', $screen_id)
+            //  -> where('screen_id', $screen_id)
              ->where(function($query) use($start_time, $end_time){
               $query->whereBetween('start_time', [$start_time, $end_time])
                     ->orWhereBetween('end_time', [$start_time, $end_time]);})
@@ -83,7 +83,7 @@ class ScheduleController extends Controller
       // コンストラクタでインスタンスを初期設定する
 
         $schedule->movie_id=$movie_id;
-        $schedule->screen_id=$screen_id;
+        // $schedule->screen_id=$screen_id;
         $schedule->start_time=$start_time;
         $schedule->end_time=$end_time;
         

@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SheetController;
+use App\Http\Controllers\ScheduleController;
 
 // Route::get('URL', [Controllerの名前::class, 'Controller内のfunction名']);
 
