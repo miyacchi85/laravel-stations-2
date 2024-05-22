@@ -9,6 +9,13 @@
 <body>
 <h1>映画一覧</h1>
 
+<!-- <form action="logout" method="POST"> -->
+  <!-- @method('DELETE') -->
+  <!-- @csrf
+    <div>
+      <button type="submit">{{ __('ログアウト') }}</button>
+    </div>
+</form> -->
 <!--検索フォーム-->
 <form method="GET" action="movies">
   <label for="keyword">キーワード</label>

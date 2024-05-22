@@ -14,18 +14,18 @@ class SheetController extends Controller
     return view('sheets', ['sheets' => $sheets]);
   }
 
-//   public function reservation($movie_id, $schedule_id)
-//   {
-//     $sheets = Sheet::query()
-//             ->with(['reservations' => function ($query)  use ($schedule_id){
-//               $query->where('schedule_id', $schedule_id);
-//             }])
-//             ->get();
-//     // dd($sheets);
-//     $date=request()->input('date');
-//     if(!$date) {
-//       abort(400);
-//     }
-//     return view('sheetsReservation', ['sheets' => $sheets, 'movie_id' => $movie_id, 'schedule_id' => $schedule_id] );
-//   }
+  public function reservation($movie_id, $schedule_id)
+  {
+    $sheets = Sheet::query()
+            ->with(['reservations' => function ($query)  use ($schedule_id){
+              $query->where('schedule_id', $schedule_id);
+            }])
+            ->get();
+    // dd($sheets);
+    $date=request()->input('date');
+    if(!$date) {
+      abort(400);
+    }
+    return view('sheetsReservation', ['sheets' => $sheets, 'movie_id' => $movie_id, 'schedule_id' => $schedule_id] );
+  }
 }
