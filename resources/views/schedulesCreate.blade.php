@@ -26,12 +26,12 @@
   @csrf
     <div>
       <input type="hidden" name="movie_id" value={{$id}}>
-      <!-- <label for="screen_id">{{ __('スクリーン') }}</label>
+      <label for="screen_id">{{ __('スクリーン') }}</label>
       <select name="screen_id" id="screen_id">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
-      </select> -->
+      </select>
       <label for="start_time_date">{{ __('開始日付') }}</label>
       <input type="date" name="start_time_date">
       <label for="start_time_time">{{ __('開始時刻') }}</label>
